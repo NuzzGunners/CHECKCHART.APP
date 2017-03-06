@@ -1,0 +1,5 @@
+<form materialize>
+  <i class="material-icons prefix">search</i>
+  <input [disabled]="isSaving" [(ngModel)]="txtSearchAN" autocomplete="off" name="txtSearchAN" type="text" class="validate" (keyup.enter)="search($event)">
+  <label for="txtSearchAN">AN</label>
+</form>

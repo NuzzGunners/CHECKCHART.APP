@@ -1,5 +1,5 @@
 {
-  "name": "ttt",
+  "name": "checkchart",
   "version": "0.0.0",
   "license": "MIT",
   "angular-cli": {},
@@ -23,7 +23,13 @@
     "core-js": "^2.4.1",
     "rxjs": "^5.0.1",
     "ts-helpers": "^1.1.1",
-    "zone.js": "^0.7.2"
+    "zone.js": "^0.7.2",
+    "@types/lodash": "^4.14.38",
+    "alertify.js": "^1.0.12",
+    "angular2-materialize": "^6.1.1",
+    "material-design-icons": "^3.0.1",
+    "materialize-css": "^0.97.8",
+    "lodash": "^4.16.6"
   },
   "devDependencies": {
     "@angular/cli": "1.0.0-beta.31",

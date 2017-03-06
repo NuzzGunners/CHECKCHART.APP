@@ -1,10 +1,10 @@
-import { TttPage } from './app.po';
+import { CheckchartPage } from './app.po';
 
-describe('ttt App', function() {
-  let page: TttPage;
+describe('checkchart App', function() {
+  let page: CheckchartPage;
 
   beforeEach(() => {
-    page = new TttPage();
+    page = new CheckchartPage();
   });
 
   it('should display message saying app works', () => {

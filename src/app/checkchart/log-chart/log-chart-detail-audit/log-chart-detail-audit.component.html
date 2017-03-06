@@ -1,0 +1,12 @@
+<div *ngIf="doctorAudit.doctor" class="box">
+  <i class="material-icons icon-green">offline_pin</i>
+  <span class="detail">
+  Doctor Audit: <b>{{doctorAudit?.fullname}}</b>
+</span>
+</div>
+<div *ngIf="nurseAudit.code" class="box2">
+  <i class="material-icons icon-red">offline_pin</i>
+  <span class="detail">
+  Nurse Audit: <b>{{nurseAudit?.name}}</b>
+</span>
+</div>

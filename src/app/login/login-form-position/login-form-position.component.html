@@ -1,0 +1,19 @@
+<div class="row margin">
+  <div id="bb" class="row margin center">
+    กรุณาเลือก ตำแหน่ง สำหรับเข้าทำงาน
+  </div>
+  <div class="input-field col s12">
+    <i class="material-icons prefix">group_work</i>
+    <select (change)="changePosition($event)" materialize="material_select" [materializeSelectOptions]="selectPositionOptions"
+      id="ddlposition" name="ddlposition" class="validate">    
+          <option value="" disabled selected>เลือก ตำแหน่ง ..</option>      
+                <option *ngFor="let item of selectPositionOptions" [value]="item.position">{{item.positionLocalName}}</option>
+          </select>
+    <label for="ddlposition" [class.active]="ddlposition">ตำแหน่ง</label>
+  </div>
+</div>
+<div class="row margin">
+  <div class="input-field col s12">
+    <button (click)="btnposition()" class="btn waves-effect waves-light col s12">ตกลง</button>
+  </div>
+</div>

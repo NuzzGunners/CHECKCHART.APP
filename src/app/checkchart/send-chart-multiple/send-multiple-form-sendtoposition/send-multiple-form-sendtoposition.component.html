@@ -1,0 +1,17 @@
+<div *ngIf="position == 63">
+  <input (change)="changegroupPosition($event)" class="with-gap" name="groupPosition" type="radio" id="raCoder"
+    value="0" />
+  <label for="raCoder">ส่งไป Coder</label>
+  <input (change)="changegroupPosition($event)" class="with-gap" name="groupPosition" type="radio" id="raDiag"
+    value="1" />
+  <label for="raDiag">ส่งไป Diag</label>
+</div>
+
+<div *ngIf="(isSendCoder && position == 63) || position == 55" class="input-field col s12">
+  <select [(ngModel)]="sendtouserSelected" (change)="changeddlsendtouser($event)" materialize="material_select" [materializeSelectOptions]="sendtouser"
+    name="ddlsendtouser" class="validate">
+    <option value="" disabled selected>เลือก Coder ..</option>
+    <option *ngFor="let item of sendtouser" [value]="item.username">{{item.fullname}} ({{item.positionName}})</option>
+    </select>
+    <label for="ddlsendtouser">Coder</label>
+</div>

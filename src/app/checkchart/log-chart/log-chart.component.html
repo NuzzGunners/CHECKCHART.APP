@@ -1,0 +1,41 @@
+<p></p>
+<div class="chip">
+    <img src="../../assets/icon-user-default.png" alt="Contact Person"> <b>{{userLogin.fullname}}</b> - <b>{{userLogin.positionLocalName}}</b>
+</div>
+
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <app-log-chart-form (patientSearch)="searchPatient($event)"></app-log-chart-form>
+                    </div>
+                    <div class="col s12 center">
+                        <img *ngIf="isLoading" width="25px" height="25px" src="../../../assets/loading.gif">
+                    </div>
+                </div>
+                <div *ngIf="patient.an" class="row">
+                    <div class="input-field col s12">
+                        <app-log-chart-detail [patient]="patient"></app-log-chart-detail>
+                    </div>
+                </div>
+                <div *ngIf="doctorAudit.doctor || nurseAudit.code" class="row">
+                    <div class="input-field col s12">
+                        <app-log-chart-detail-audit [nurseAudit]="nurseAudit" [doctorAudit]="doctorAudit"></app-log-chart-detail-audit>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <app-log-chart-list (deleteLog)="deleteLog($event)" [checkchartLog]="checkchartLog" [lastId]="lastId" [userLogin]="userLogin"></app-log-chart-list>
+                    </div>
+                </div>
+                <div *ngIf="patient.an" class="row">
+                    <div class="input-field col s12">
+                        <app-log-chart-detail [patient]="patient"></app-log-chart-detail>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

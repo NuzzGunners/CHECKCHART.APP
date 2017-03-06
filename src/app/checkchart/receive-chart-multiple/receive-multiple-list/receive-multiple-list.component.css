@@ -1,0 +1,4 @@
+.collection-item:hover {
+    background-color:#ebebeb;
+    transition: background 0.2s linear;
+}

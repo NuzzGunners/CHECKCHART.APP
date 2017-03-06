@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class TttPage {
+export class CheckchartPage {
   navigateTo() {
     return browser.get('/');
   }

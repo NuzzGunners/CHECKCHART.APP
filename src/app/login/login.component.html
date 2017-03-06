@@ -1,0 +1,29 @@
+<div class="login-page row">
+  <div class="col s12 m4 l4">
+  </div>
+  <div class="col s12 m4 l4">
+    <div class="card">
+      <div class="card-content">
+        <div class="row">
+          <div class="input-field col s12 center">
+            <img [src]="imgLogin" alt="" class="circle responsive-img valign profile-image-login">
+            <p class="center login-form-text">Check Chart</p>v.2.60.2.3
+          </div>
+          <div *ngIf="isLogin && !isMultiplePosition" class="row">
+            <div class="input-field col s12 center">
+              {{loginData.fullname}} <br> {{loginData.positionLocalName}} <br> {{loginData.roleuserName}}
+            </div>
+          </div>
+        </div>
+        <app-login-form *ngIf="!isLogin" (login)="login($event)" [isLoading]="isLoading"></app-login-form>
+        <app-login-form-position *ngIf="isMultiplePosition" (changedposition)="changedposition($event)" (position)="position()" [selectPositionOptions]="selectPositionOptions"></app-login-form-position>
+        <div class="row" *ngIf="isLogin && !isMultiplePosition">
+          <app-login-form-changepassword (changedPassword)="changedPassword($event)"></app-login-form-changepassword>
+          <app-login-form-logout (logout)="logout()"></app-login-form-logout>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m4 l4">
+  </div>
+</div>

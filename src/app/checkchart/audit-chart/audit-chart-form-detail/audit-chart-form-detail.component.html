@@ -1,0 +1,72 @@
+<div *ngIf="patient.an" class="box">
+  <i class="material-icons">account_box</i>
+  <span class="detail">HN: <b>{{patient.hn}}</b> AN: <b>{{patient.an}}</b> ชื่อ-สกุล: <b>{{patient.fullname}}</b> หอผู้ป่วย: <b>{{patient.activeWardName}}</b> วันที่จำหน่าย: <b>{{patient.dischargeDateTime | dateformat}}</b></span>
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <div class="row">
+      <div class="input-field col s3">
+        <input id="rwbefore" name="rwbefore" type="text" [(ngModel)]="listPatients.rwbefore">
+        <label for="rwbefore" [class.active]="listPatients.rwbefore">RW ก่อน</label>
+      </div>
+      <div class="input-field col s3">
+        <input id="rwafter" name="rwafter" type="text" [(ngModel)]="listPatients.rwafter">
+        <label for="rwafter" [class.active]="listPatients.rwafter">RW หลัง</label>
+      </div>
+      <div class="input-field col s3">
+        <input (mousedown)="clearddlward()" [(ngModel)]="listPatients.ward" id="ddlward" name="ddlward" type="text" materialize="autocomplete"
+          [materializeParams]="ward">
+        <label for="ddlward" [class.active]="listPatients.ward">หอผู้ป่วย</label>
+      </div>
+      <div class="input-field col s3">
+        <input id="los" name="los" type="text" [(ngModel)]="listPatients.los">
+        <label for="los" [class.active]="patient.los">LOS</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s6">
+        <input (mousedown)="clearddldoctormaster()" [(ngModel)]="listPatients.doctormaster" id="ddldoctormaster" name="ddldoctormaster" type="text" materialize="autocomplete"
+          [materializeParams]="doctor">
+        <label for="ddldoctormaster" [class.active]="listPatients.doctormaster">แพทย์ Master</label>
+      </div>
+      <div class="input-field col s6">
+        <input (mousedown)="clearddlcategory()" [(ngModel)]="listPatients.category" id="ddlcategory" name="ddlcategory" type="text" materialize="autocomplete"
+          [materializeParams]="category">
+        <label for="ddlcategory" [class.active]="listPatients.category">ประเภท Summary</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s6">
+        <input (mousedown)="clearddldoctor()" [(ngModel)]="listPatients.doctor" id="ddldoctor" name="ddldoctor" type="text" materialize="autocomplete"
+          [materializeParams]="doctor">
+        <label for="ddldoctor" [class.active]="listPatients.doctor">แพทย์ Audit</label>
+      </div>
+      <div class="input-field col s6">
+        <input (mousedown)="clearddlcoder()" [(ngModel)]="listPatients.coder" id="ddlcoder" name="ddlcoder" type="text" materialize="autocomplete"
+          [materializeParams]="coder">
+        <label for="ddlcoder" [class.active]="listPatients.coder">Coder</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s6">
+        <input (mousedown)="clearddldoctorconsult()" [(ngModel)]="listPatients.doctorconsult" id="ddldoctorconsult" name="ddldoctorconsult" type="text"
+          materialize="autocomplete" [materializeParams]="doctor">
+        <label for="ddldoctorconsult" [class.active]="listPatients.doctorconsult">แพทย์ Consult</label>
+      </div>
+      <div class="input-field col s6">
+        <input (mousedown)="clearddlnurse()" [(ngModel)]="listPatients.nurse" id="ddlnurse" name="ddlnurse" type="text"
+          materialize="autocomplete" [materializeParams]="nurse">
+        <label for="ddlnurse" [class.active]="listPatients.nurse">พยาบาล Audit</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align: right;" class="input-field col s6 right">
+<button [disabled]="!formValid()" (click)="save($event)" href="" id="btn-save" class="btn-large waves-effect waves-light">
+                Save</button>
+<button [disabled]="!listPatients.id || listPatients.id=='00000000-0000-0000-0000-000000000000'" (click)="delete($event)" href=""
+  id="btn-delete" class="btn-large waves-effect waves-light">
+                Delete</button>
+</div>

@@ -1,0 +1,40 @@
+<ul id="list" materialize="collapsible" class="collapsible" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header active"><span class="badge"></span><i class="material-icons">poll</i>Chart Log</div>
+    <div class="collapsible-body">
+      <table class="bordered striped highlight">
+        <thead>
+          <tr>
+            <th>ลำดับ</th>
+            <th>รับ Chart โดย</th>
+            <th>วันที่ รับ Chart</th>
+            <th>รับ Chart ที่</th>
+            <th>ส่ง Chart โดย</th>
+            <th>วันที่ ส่ง Chart</th>
+            <th>ส่ง Chart ไปที่</th>
+            <th>Coder</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of checkchartLog; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{item.receivebyusername}}</td>
+            <td>{{item.receivebydatetime | dateformat}}</td>
+            <td>{{item.receivebypositionlocalname}}</td>
+            <td>{{item.sendtobyusername}}</td>
+            <td>{{item.sendtodatetime | dateformat}}</td>
+            <td>{{item.sendtopositionlocalname}}</td>
+            <td>{{item.sendtousername}}</td>
+            <td>
+              <a *ngIf="(item.sendtodatetime == null && item.id == lastId && item.receivebyposition == userLogin.positionName && item.receivebyuser == userLogin.username && userLogin.positionName != 'Shelving IPD')
+              || (item.sendtodatetime != null && item.id == lastId && item.sendtoposition == sendtopositionname && item.sendtobyuser == userLogin.username)"
+                (click)="delete(item,$event)" href="">
+                <i class="material-icons">delete</i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </li>
+</ul>

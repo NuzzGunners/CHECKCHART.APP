@@ -1,0 +1,179 @@
+<p></p>
+<div class="chip">
+  <img src="../../assets/icon-user-default.png" alt="Contact Person"> 
+  คุณ : <b>{{userLogin.fullname}}</b> Position : <b>{{userLogin.positionName}}</b>
+</div>
+
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <div class="row">
+          <div class="input-field col s12">
+            <form materialize [formGroup]="form">
+              <i class="material-icons prefix">search</i>
+              <input autocomplete="off" id="searchAN" type="text" class="validate" (keyup.enter)="searchPatient($event)" formControlName="searchAN">
+              <label for="searchAN">AN</label>
+            </form>
+          </div>
+          <div class="col s12 center">
+            <img *ngIf="isLoading" width="25px" height="25px" src="../../../assets/loading.gif">
+          </div>
+        </div>
+         
+        <hr>
+        <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+          <li>
+            <div class="collapsible-header active"><span class="badge"></span><i class="material-icons">local_hospital</i>Patient Info</div>
+            <div class="collapsible-body">
+              <table class="bordered striped highlight">
+                <thead>
+                  <tr>
+                    <th>AN</th>
+                    <th>HN</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Adm DateTime</th>
+                    <th>DC DateTime</th>
+                    <th>DC Ward</th>
+                    <th>DC Status</th>
+                    <th>DC Type</th>
+                    <th>DC Doctor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="patient.an">
+                    <td>{{patient.an}}</td>
+                    <td>{{patient.hn}}</td>
+                    <td>{{patient.fullname}}</td>
+                    <td>{{patient.fullAge}}</td>
+                    <td>{{patient.admDateTime | dateformat}}</td>
+                    <td>{{patient.dischargeDateTime | dateformat}}</td>
+                    <td>{{patient.activeWardName}}</td>
+                    <td>{{patient.diagnosisStatusTypeName}}</td>
+                    <td>{{patient.dischargeName}}</td>
+                    <td>{{patient.dischargeDoctorName}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header"><span class="badge"></span><i class="material-icons">poll</i>Chart Log</div>
+            <div class="collapsible-body">
+              <table class="bordered striped highlight">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>AN</th>
+                    <th>Receive by User</th>
+                    <th>Receive by DateTime</th>
+                    <th>Receive by Position</th>
+                    <th>Send to by User</th>
+                    <th>Send to DateTime</th>
+                    <th>Send to Position</th>
+                    <th>Send to User</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of checkchartLog; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{item.an}}</td>
+                    <td>{{item.receivebyuser}}</td>
+                    <td>{{item.receivebydatetime | dateformat}}</td>
+                    <td>{{item.receivebyposition}}</td>
+                    <td>{{item.sendtobyuser}}</td>
+                    <td>{{item.sendtodatetime | dateformat}}</td>
+                    <td>{{item.sendtoposition}}</td>
+                    <td>{{item.sendtouser}}</td>
+                    <td>
+
+                      <!--<a *ngIf="item.id == lastId && item.receivebyuser == userLogin.username && item.sendtouser == null" (click)="deletePopup(item,$event)"!-->
+                      <a *ngIf="item.id == lastId && item.receivebyposition == userLogin.positionName && item.receivebyuser == userLogin.username && item.sendtodatetime == null && userLogin.positionName != 'Shelving IPD'"
+                        (click)="deletePopup(item,$event)" href="">
+                        <i class="material-icons">delete</i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </li>
+        </ul>
+        <hr>
+        <button [disabled]="!onReceive" style="width:15rem;" (click)="receivePopup($event)" href="" id="btn-receive" class="btn-large waves-effect waves-light">
+          {{btnReceiveChartLabel}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+  <!--<form materialize class="col s12" [formGroup]="form" (ngSubmit)="save()">!-->
+  <div class="modal-content">
+    <h4>{{modalHeader}}</h4>
+    <div class="row">
+      <hr>
+      <h6>AN: <b>{{patient.an}}</b></h6>
+      <h6>Fullname: <b>{{patient.fullname}}</b></h6>
+      <h6>From Ward: <b>{{patient.activeWardName}}</b></h6>
+      <h6 *ngIf="checkchart.receivebyusername">From User: <b>{{checkchart.receivebyusername}}</b></h6>
+      <h6 *ngIf="checkchart.receivebyposition">From Positon: <b>{{checkchart.receivebypositionname}}</b></h6>
+      <!--<h6>Receive by User: <b>{{userLogin.fullname}}</b></h6>
+        <h6>Receive by User Position: <b>{{userLogin.positionName}}</b></h6>!-->
+      <hr>
+      <!--<input id="id" type="hidden" class="validate" [(ngModel)]="checkchart.id" formControlName="id">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">question_answer</i>
+          <input id="name" type="text" class="validate" [(ngModel)]="checkchart.an" formControlName="an" [class.invalid]="form.controls['an'].touched && !form.controls['an'].valid">
+          <label for="an" [class.active]="checkchart.an">AN</label>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">question_answer</i>
+          <input id="receivebyuser" type="text" class="validate" [(ngModel)]="checkchart.receivebyuser" formControlName="receivebyuser"
+            [class.invalid]="form.controls['receivebyuser'].touched && !form.controls['receivebyuser'].valid">
+          <label for="receivebyuser" [class.active]="checkchart.receivebyuser">ReceivebyUser</label>
+        </div>!-->
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="closeModal()">Close</a>
+    <button class="btn waves-effect waves-light modal-action modal-close" type="submit" (click)="save()">
+      Submit<i class="material-icons right">send</i>
+    </button>
+  </div>
+  <!--</form>!-->
+</div>
+
+<!-- Modal Delete Structure -->
+<div id="modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalDeleteActions">
+  <form materialize class="col s12" [formGroup]="form" (ngSubmit)="delete()">
+    <div class="modal-content">
+      <h4>Delete item</h4>
+      <hr>
+      <h6>an: <b>{{itemInLineLog.an}}</b></h6>
+      <h6>fullname: <b>{{patient.fullname}}</b></h6>
+      <h6>receivebyuser: <b>{{itemInLineLog.receivebyuser}}</b></h6>
+      <h6>receivebydatetime: <b>{{itemInLineLog.receivebydatetime | dateformat}}</b></h6>
+      <h6>receivebyposition: <b>{{itemInLineLog.receivebyposition}}</b></h6>
+      <!--<h6>sendtouser: {{itemInLineLog.sendtouser}}</h6>
+    <h6>sendtodatetime: {{itemInLineLog.sendtodatetime | date:"dd/MM/yyyy HH:mm"}}</h6>
+    <h6>sendtoposition: {{itemInLineLog.sendtoposition}}</h6>!-->
+      <hr>
+      <div class="input-field col s12">
+        <select materialize="material_select" [materializeSelectOptions]="selectReasonOptions" id="reason" name="reason" class="validate" [(ngModel)]="cxlReason" formControlName="cxlReason">    
+            <option value="" disabled selected>Select option ..</option>      
+            <option *ngFor="let item of selectReasonOptions" [value]="item.id">{{item.name}}</option>  
+      </select>
+        <label for="reason" [class.active]="reason">Reason</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="waves-effect waves-green btn-flat" (click)="closeDeleteModal()">Close</a>
+      <button class="btn waves-effect waves-light modal-action modal-close" type="submit" [disabled]="!form.valid">
+      Submit<i class="material-icons right">send</i>
+    </button>
+    </div>
+  </form>
+</div>
