@@ -64,7 +64,7 @@ export class CheckchartService {
   }
 
   getPatientCheckchartLog(an: string): Observable<Checkchart[]> {
-    return this.http.get(this._baseUrlCheckchart + 'checkchart/' + an + '/log')
+    return this.http.get(this._baseUrlCheckchart + 'checkchartlog/' + an)
       .map((res: Response) => {
         return res.json();
       }).catch(this.handleError);
