@@ -101,37 +101,63 @@ export class AuditChartComponent implements OnInit, OnDestroy {
   searchPatient(txtSearch) {
     if (txtSearch.length > 0) {
       this.isLoading = true;
+
       this.getPatient(txtSearch);
+
     }
   }
 
   getPatient(an) {
-    this.checkchartService.getLastPatientCheckchart(an)
+    this.checkchartService.getPatient(an)
+      .subscribe(res => {
+        if (res[0]) {
+
+          this.getPatientCheckchart(res[0]);
+          this.patient = res[0];
+
+          this.isLoading = false;
+          this.notificationService.printSuccessMessageBl('โหลดข้อมูล Patient success.');
+        } else {
+          this.notificationService.printErrorMessageBl('โหลดข้อมูล Patient error. ไม่พบข้อมูล');
+          this.isLoading = false;
+          this.resetForm();
+        }
+      }, error => {
+        this.notificationService.printErrorMessageBl('โหลดข้อมูล Patient error. ' + error);
+        this.resetForm();
+      });
+  }
+
+  getPatientCheckchart(patient) {
+    this.checkchartService.getLastPatientCheckchart(patient.an)
       .subscribe(lastcheckchart => {
 
         if (lastcheckchart.receivebyposition === 63 && lastcheckchart.sendtoposition == null) {
 
-          this.checkchartService.getPatient(an)
-            .subscribe(res => {
-              if (res[0]) {
-                this.patient = res[0];
-
-                this.getPatientAudit(this.patient);
-
-                this.isLoading = false;
-                this.notificationService.printSuccessMessageBl('โหลดข้อมูล Patient success.');
-              } else {
-                this.notificationService.printErrorMessageBl('โหลดข้อมูล Patient error. ไม่พบข้อมูล');
-                this.isLoading = false;
-              }
-            }, error => {
-              this.notificationService.printErrorMessageBl('โหลดข้อมูล Patient error. ' + error);
-            });
+          this.getPatientAudit(patient);
 
         } else {
-          this.notificationService.printErrorMessageBl('Chart ไม่ได้อยู่ที่คุณ.');
-          this.isLoading = false;
+
+          this.checkchartService.getAuditchart(patient.an)
+            .subscribe(res => {
+
+              if (res.length > 0) {
+
+                this.getPatientAudit(patient);
+
+              } else {
+                this.notificationService.printErrorMessageBl('Chart ไม่ได้อยู่ที่คุณ.');
+                this.isLoading = false;
+                this.resetForm();
+              }
+
+            }, error => {
+              console.log('โหลดข้อมูล Auditchart error. ' + error);
+              this.isLoading = false;
+              this.resetForm();
+            });
         }
+
       }, error => {
         this.notificationService.printErrorMessageBl('โหลดข้อมูล Checkchart error. ' + error);
       });
@@ -139,36 +165,22 @@ export class AuditChartComponent implements OnInit, OnDestroy {
 
   getPatientAudit(patient) {
     this.checkchartService.getAuditchart(patient.an)
-      .subscribe(res => {        
+      .subscribe(res => {
         if (res[0]) {
-          this.checkchartService.getDoctor(res[0].doctor == null ? '' : res[0].doctor).subscribe(doc => {
-            this.checkchartService.getDoctor(res[0].doctormaster).subscribe(resdoctormaster => {
-              this.checkchartService.getDoctor(res[0].doctorconsult == null ? '' : res[0].doctorconsult).subscribe(resdoctorconsult => {
-                this.checkchartService.getWard(res[0].ward).subscribe(resward => {
-                  this.checkchartService.getNurse(res[0].nurse == null ? '' : res[0].nurse).subscribe(resnurse => {
-                    this.userService.getUser(res[0].coder).subscribe(rescoder => {
-                      this.checkchartService.getCategorie(res[0].category).subscribe(rescategory => {
-                        this.listPatients.hn = patient.hn;
-                        this.listPatients.an = patient.an;
-                        this.listPatients.fullname = patient.fullname;
-                        this.listPatients.id = res[0].id;
-                        this.listPatients.doctor = (res[0].doctor == '' || res[0].doctor == null) ? '' : res[0].doctor + ' : ' + doc.fullname;
-                        this.listPatients.category = res[0].category + ' : ' + rescategory[0].name;
-                        this.listPatients.doctormaster = res[0].doctormaster + ' : ' + resdoctormaster.fullname;
-                        this.listPatients.doctorconsult = (res[0].doctorconsult == '' || res[0].doctorconsult == null) ? '' : res[0].doctorconsult + ' : ' + resdoctorconsult.fullname;
-                        this.listPatients.los = res[0].los;
-                        this.listPatients.ward = res[0].ward + ' : ' + resward.name;
-                        this.listPatients.coder = (res[0].coder == '' || res[0].coder == null) ? '' : res[0].coder + ' : ' + rescoder[0].fullname;
-                        this.listPatients.rwbefore = res[0].rwbefore;
-                        this.listPatients.rwafter = res[0].rwafter;
-                        this.listPatients.nurse = (res[0].nurse == '' || res[0].nurse == null) ? '' : res[0].nurse + ' : ' + resnurse.name;
-                      });
-                    });
-                  });
-                });
-              });
-            });
-          });
+          this.listPatients.hn = patient.hn;
+          this.listPatients.an = patient.an;
+          this.listPatients.fullname = patient.fullname;
+          this.listPatients.id = res[0].id;
+          this.listPatients.doctor = (res[0].doctor == '' || res[0].doctor == null) ? '' : res[0].doctor + ' : ' + res[0].doctorname;
+          this.listPatients.category = res[0].category + ' : ' + res[0].categoryname;
+          this.listPatients.doctormaster = res[0].doctormaster + ' : ' + res[0].doctormastername;
+          this.listPatients.doctorconsult = (res[0].doctorconsult == '' || res[0].doctorconsult == null) ? '' : res[0].doctorconsult + ' : ' + res[0].doctorconsultname;
+          this.listPatients.los = res[0].los;
+          this.listPatients.ward = res[0].ward + ' : ' + res[0].wardname;
+          this.listPatients.coder = (res[0].coder == '' || res[0].coder == null) ? '' : res[0].coder + ' : ' + res[0].codername;
+          this.listPatients.rwbefore = res[0].rwbefore;
+          this.listPatients.rwafter = res[0].rwafter;
+          this.listPatients.nurse = (res[0].nurse == '' || res[0].nurse == null) ? '' : res[0].nurse + ' : ' + res[0].nursename;
         } else {
           this.listPatients.hn = patient.hn;
           this.listPatients.an = patient.an;
@@ -187,6 +199,7 @@ export class AuditChartComponent implements OnInit, OnDestroy {
         }
       }, error => {
         console.log('โหลดข้อมูล Audit error. ' + error);
+        this.resetForm();
       });
   }
 
@@ -210,7 +223,7 @@ export class AuditChartComponent implements OnInit, OnDestroy {
     this.resetForm();
   }
 
-  deleteAudit(audit) { 
+  deleteAudit(audit) {
     this.notificationService.openConfirmationDialog('Are you sure you want to remove '
       + audit.fullname + '?',
       () => {
@@ -220,7 +233,7 @@ export class AuditChartComponent implements OnInit, OnDestroy {
             this.resetForm();
           }, error => {
             this.notificationService.printErrorMessageBl('ลบข้อมูล Audit error. ' + error);
-          });        
+          });
       });
   }
 

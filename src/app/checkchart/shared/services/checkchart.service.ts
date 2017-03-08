@@ -57,7 +57,7 @@ export class CheckchartService {
   }
 
   getAuditchart(an: any): Observable<any> {
-    return this.http.get(this._baseUrlCheckchart + 'audit/' + an)
+    return this.http.get(this._baseUrlCheckchart + 'viewaudit/' + an)
       .map((res: Response) => {
         return res.json();
       }).catch(this.handleError);

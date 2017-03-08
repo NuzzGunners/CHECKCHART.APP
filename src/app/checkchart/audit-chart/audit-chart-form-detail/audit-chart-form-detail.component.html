@@ -1,6 +1,8 @@
 <div *ngIf="patient.an" class="box">
   <i class="material-icons">account_box</i>
-  <span class="detail">HN: <b>{{patient.hn}}</b> AN: <b>{{patient.an}}</b> ชื่อ-สกุล: <b>{{patient.fullname}}</b> หอผู้ป่วย: <b>{{patient.activeWardName}}</b> วันที่จำหน่าย: <b>{{patient.dischargeDateTime | dateformat}}</b></span>
+  <span class="detail">
+  HN: <b>{{patient?.hn}}</b> AN: <b>{{patient?.an}}</b> ชื่อ-สกุล: <b>{{patient?.fullname}}</b> สิทธิ์: <b>{{patient?.defaultRightName}}</b> หอผู้ป่วย: <b>{{patient?.activeWardName}}</b> วันที่จำหน่าย: <b>{{patient?.dischargeDateTime | dateformat}}</b>
+</span>
 </div>
 
 <div class="card">
