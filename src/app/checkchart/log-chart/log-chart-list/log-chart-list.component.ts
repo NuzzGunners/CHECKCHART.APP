@@ -19,7 +19,7 @@ export class LogChartListComponent implements OnInit {
     if (this.userLogin.position == "53") {
       this.sendtoposition = 55;
       this.sendtopositionname = "Medical Record Receive Chart";
-    } else if (this.userLogin.position == "55" || this.userLogin.position == "63") {
+    } else if (this.userLogin.position == "55") {
       this.sendtoposition = 56;
       this.sendtopositionname = "Coder";
     } else if (this.userLogin.position == "56") {
@@ -47,5 +47,4 @@ export class LogChartListComponent implements OnInit {
     event.preventDefault();
     this.deleteLog.emit(item);
   }
-
 }
