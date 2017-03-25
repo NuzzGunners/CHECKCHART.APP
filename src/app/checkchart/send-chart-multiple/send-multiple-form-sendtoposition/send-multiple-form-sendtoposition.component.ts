@@ -9,10 +9,12 @@ export class SendMultipleFormSendtopositionComponent {
 
     @Input() sendtouser: any;
     @Input() position: number;
+
     @Output() ddlsendtouser: EventEmitter<string> = new EventEmitter();
-    groupPosition: any;
-    isSendCoder: boolean = false;
     @Output() changePositionToSend: EventEmitter<string> = new EventEmitter();
+
+    groupPosition: any;
+    isSendCoder: boolean = false;    
     sendtouserSelected: string;
 
     changeddlsendtouser() {
