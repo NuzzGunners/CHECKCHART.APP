@@ -10,8 +10,9 @@ import { Patient } from '../../shared/services/checkchart';
 export class ReceiveMultipleFormSaveComponent {
 
     modalActions = new EventEmitter<string | MaterializeAction>();
-    @Input() listPatients = [];
+    @Input() listPatients: any;
     @Output() patientSave = new EventEmitter();
+    @Output() patientCancelSave = new EventEmitter();
 
     receivePopup(event: any): void {
         event.preventDefault();
@@ -19,12 +20,13 @@ export class ReceiveMultipleFormSaveComponent {
     }
 
     save() {
-       this.patientSave.emit();
-       //this.listPatients = [];
+        this.patientSave.emit();
+        //this.listPatients = [];
     }
 
     closeModal() {
         this.modalActions.emit({ action: "modal", params: ['close'] });
+        this.patientCancelSave.emit();
     }
 
 }

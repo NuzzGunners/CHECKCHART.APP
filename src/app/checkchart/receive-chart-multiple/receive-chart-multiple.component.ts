@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+
 import { CheckchartService } from '../shared/services/checkchart.service';
+
 import { Patient, PatientMultiSaveItem, Checkchart } from '../shared/services/checkchart';
 import { ItemsService } from '../../shared/utils/items.service';
 import { NotificationService } from '../../shared/utils/notification.service';
@@ -9,7 +11,7 @@ import { NotificationService } from '../../shared/utils/notification.service';
     templateUrl: './receive-chart-multiple.component.html',
     styleUrls: ['./receive-chart-multiple.component.css']
 })
-export class ReceiveChartMultipleComponent implements OnInit {
+export class ReceiveChartMultipleComponent implements OnInit, OnDestroy {
 
     userLogin: any;
     patient: Patient;
@@ -21,7 +23,8 @@ export class ReceiveChartMultipleComponent implements OnInit {
     constructor(
         private checkchartService: CheckchartService,
         private itemsService: ItemsService,
-        private notificationService: NotificationService
+        private notificationService: NotificationService,
+
     ) {
         this.resetForm();
     }
@@ -52,7 +55,7 @@ export class ReceiveChartMultipleComponent implements OnInit {
         this.checkchartService.getPatient(an)
             .subscribe(res => {
                 if (res[0]) {
-                    this.patient = res[0];                    
+                    this.patient = res[0];
 
                     this.getPatientCheckchart(this.patient.an);
 
@@ -138,18 +141,26 @@ export class ReceiveChartMultipleComponent implements OnInit {
 
         this.checkchartService.addCheckchartMultiple(this.listpatientMultiSaveItem)
             .subscribe(() => {
+                
                 this.notificationService.printSuccessMessage('Chart รับ success.');
                 this.resetForm();
                 this.isSaving = false;
+                
             }, error => {
+                
                 this.notificationService.printErrorMessage('Chart รับ error. ' + error);
                 this.resetForm();
                 this.isSaving = false;
+                
             });
     }
 
     removePatient(an) {
         this.listPatients = this.listPatients.filter(pt => pt.an !== an);
         this.listpatientMultiSaveItem = this.listpatientMultiSaveItem.filter(pt => pt.an !== an);
+    }
+
+    ngOnDestroy() {
+        
     }
 }

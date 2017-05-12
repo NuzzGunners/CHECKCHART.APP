@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { CheckchartService } from '../shared/services/checkchart.service';
 import { Patient, PatientMultiSaveItem, Checkchart } from '../shared/services/checkchart';
 import { ItemsService } from '../../shared/utils/items.service';
@@ -9,7 +9,7 @@ import { NotificationService } from '../../shared/utils/notification.service';
     templateUrl: './send-chart-multiple.component.html',
     styleUrls: ['./send-chart-multiple.component.css']
 })
-export class SendChartMultipleComponent implements OnInit {
+export class SendChartMultipleComponent implements OnInit, OnDestroy {
 
     userLogin: any;
     patient: Patient;
@@ -70,7 +70,7 @@ export class SendChartMultipleComponent implements OnInit {
         this.checkchartService.getPatient(an)
             .subscribe(res => {
                 if (res[0]) {
-                    this.patient = res[0];                    
+                    this.patient = res[0];
 
                     this.getPatientCheckchart(this.patient.an);
 
@@ -124,6 +124,7 @@ export class SendChartMultipleComponent implements OnInit {
 
             this.listpatientMultiSaveItem.push({
                 id: this.checkchart.id,
+                an: patient.an,
                 sendtobyuser: this.userLogin.username
             });
         }
@@ -149,9 +150,14 @@ export class SendChartMultipleComponent implements OnInit {
             sendtoposition = 58;
             sendtopositionname = "Medical Record Check Chart";
             //58:Medical Record Check Chart
-        } else if (this.userLogin.position === 58) {
-            sendtoposition = 59;
-            sendtopositionname = "Scan";
+        } else if (this.userLogin.position === 58) {       
+            if (this.groupPosition == '2') {
+                sendtoposition = 63;
+                sendtopositionname = "Audit";
+            } else {
+                sendtoposition = 59;
+                sendtopositionname = "Scan";
+            }
             //59:Scan
         } else if (this.userLogin.position === 59) {
             sendtoposition = 60;
@@ -179,6 +185,7 @@ export class SendChartMultipleComponent implements OnInit {
         this.listpatientMultiSaveItem.forEach(i => {
             newlistpatientMultiSaveItem.push({
                 id: i.id,
+                an: i.an,
                 sendtouser: this.ddlsendtouser,
                 sendtoposition: sendtoposition,
                 sendtobyuser: i.sendtobyuser
@@ -190,13 +197,17 @@ export class SendChartMultipleComponent implements OnInit {
 
         this.checkchartService.updateCheckchartMultiple(newlistpatientMultiSaveItem)
             .subscribe(() => {
+                
                 this.notificationService.printSuccessMessage('Chart ส่ง success.');
                 this.resetForm();
                 this.isSaving = false;
+                
             }, error => {
+                
                 this.notificationService.printErrorMessage('Chart ส่ง error. ' + error);
                 this.resetForm();
                 this.isSaving = false;
+                
             });
     }
 
@@ -212,5 +223,9 @@ export class SendChartMultipleComponent implements OnInit {
             }, error => {
                 this.notificationService.printErrorMessage('โหลดข้อมูล SendToUsers error. ' + error);
             });
+    }
+
+    ngOnDestroy() {
+
     }
 }

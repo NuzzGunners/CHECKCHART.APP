@@ -1,4 +1,4 @@
-<button [disabled]="!listPatients.length > 0" style="width:15rem;" (click)="receivePopup($event)" href="" id="btn-receive" class="btn-large waves-effect waves-light">
+<button [disabled]="listPatients.length == 0" style="width:15rem;" (click)="receivePopup($event)" href="" id="btn-receive" class="btn-large waves-effect waves-light">
                 receive chart</button>
 
 <div id="modal1" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">

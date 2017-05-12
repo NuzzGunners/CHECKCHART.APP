@@ -3,35 +3,16 @@
   <img src="../../assets/icon-user-default.png" alt="Contact Person"> <b>{{userLogin.fullname}}</b> - <b>{{userLogin.positionLocalName}}</b>
 </div>
 
-<div class="row">
-  <div class="col s12">
-    <div class="card">
-      <div class="card-content">
-        <div class="row">
-          <div class="input-field col s12">
-            <app-audit-chart-form (patientSearch)="searchPatient($event)"></app-audit-chart-form>
-          </div>
-          <div class="col s12 center">
-            <img *ngIf="isLoading" width="25px" height="25px" src="../../../assets/loading.gif">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col s12">     
-            <app-audit-chart-form-detail 
-            (auditSave)="saveAudit($event)"
-            (auditDelete)="deleteAudit($event)"
-            [listPatients]="listPatients" 
-            [patient]="patient"
-            [doctor]="doctor" 
-            [category]="category"
-            [coder]="coder"
-            [ward]="ward"
-            [nurse]="nurse"
-            [userLogin]="userLogin">
-            </app-audit-chart-form-detail>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<app-audit-chart-form 
+(patientSearch)="searchPatient($event)"
+(auditSave)="saveAudit($event)"
+(auditDelete)="deleteAudit($event)"
+[listPatients]="listPatients" 
+[patient]="patient"
+[doctor]="doctor" 
+[category]="category"
+[coder]="coder"
+[ward]="ward"
+[nurse]="nurse"
+[userLogin]="userLogin">
+</app-audit-chart-form>

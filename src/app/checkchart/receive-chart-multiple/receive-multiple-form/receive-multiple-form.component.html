@@ -1,5 +1,31 @@
-<form materialize>
-  <i class="material-icons prefix">search</i>
-  <input [disabled]="isSaving" [(ngModel)]="txtSearchAN" autocomplete="off" name="txtSearchAN" type="text" class="validate" (keyup.enter)="search($event)">
-  <label for="txtSearchAN">AN</label>
+<form (keydown.enter)="$event.preventDefault()" materialize>
+  <div class="row">
+    <div class="col s12">
+      <div class="card">
+        <div class="card-content">
+          <div class="row">
+            <div class="input-field col s12">
+
+              <i class="material-icons prefix">search</i>
+              <input autofocus [focus]="myFocusTriggeringEventEmitter" [(ngModel)]="txtSearchAN" autocomplete="off" name="txtSearchAN"
+                type="text" class="validate" (keyup.enter)="search($event)">
+              <label for="txtSearchAN" class="active">AN</label>
+
+            </div>
+            <div class="col s12 center">
+              <img *ngIf="isLoading || isSaving" width="25px" height="25px" src="../../../assets/loading.gif">
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="input-field col s12">
+              <app-receive-multiple-list (patientRemove)="removePatient($event)" [listPatients]="listPatients"></app-receive-multiple-list>
+            </div>
+          </div>
+          <hr>
+          <app-receive-multiple-form-save (patientCancelSave)="cancelSavePatient()" (patientSave)="savePatient()" [listPatients]="listPatients"></app-receive-multiple-form-save>
+        </div>
+      </div>
+    </div>
+  </div>
 </form>

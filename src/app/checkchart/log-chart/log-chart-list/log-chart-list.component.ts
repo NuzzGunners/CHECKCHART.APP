@@ -47,4 +47,11 @@ export class LogChartListComponent implements OnInit {
     event.preventDefault();
     this.deleteLog.emit(item);
   }
+
+  canDelete(item): boolean {
+    if ((item.sendtodatetime == null && item.id == this.lastId && item.receivebyposition == this.userLogin.positionName && item.receivebyuser == this.userLogin.username && this.userLogin.positionName != 'Shelving IPD')
+      || (item.sendtodatetime != null && (this.userLogin.position != 58 || this.userLogin.position != 63) && item.id == this.lastId && item.sendtoposition == this.sendtopositionname && item.sendtobyuser == this.userLogin.username)
+      || (item.sendtodatetime != null && (this.userLogin.position == 58 || this.userLogin.position == 63) && item.id == this.lastId && item.sendtobyuser == this.userLogin.username))
+    return true;
+  }
 }

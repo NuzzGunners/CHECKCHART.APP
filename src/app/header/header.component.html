@@ -4,17 +4,19 @@
   <li routerLinkActive="active"><a routerLink="/role">Role</a></li>
   <li routerLinkActive="active"><a routerLink="/reason">Reason</a></li>
   <li routerLinkActive="active"><a routerLink="/position">Position</a></li>
+  <li routerLinkActive="active"><a routerLink="/monitor">Monitor</a></li>
 </ul>
 
 <nav class="blue darken-1">
   <div class="nav-wrapper">
-    <a routerLink="/" class="brand-logo">Check Chart</a>
+    <a routerLink="/" class="brand-logo">CHECKCHART</a>
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
       <li routerLinkActive="active"><a routerLink="/receivemultiple"><i class="material-icons left">file_download</i>รับ Chart</a></li>
       <li routerLinkActive="active"><a routerLink="/sendmultiple"><i class="material-icons left">file_upload</i>ส่ง Chart</a></li>
       <li routerLinkActive="active"><a routerLink="/audit"><i class="material-icons left">check_circle</i>Audit Chart</a></li>
       <li routerLinkActive="active"><a routerLink="/log"><i class="material-icons left">swap_vertical_circle</i>Chart log</a></li>
+      <li routerLinkActive="active"><a routerLink="/chart1"><i class="material-icons left">equalizer</i>กราฟ</a></li>
       <li routerLinkActive="active"><a routerLink="/report"><i class="material-icons left">description</i>รายงาน</a></li>
       <li routerLinkActive="active"><a href="../../assets/scc.pdf" target="blank"><i class="material-icons left">info_outline</i>คู่มือการใช้งาน</a></li>
       <li><a (click)="dropClick($event)" class="dropdown-button" href="" data-activates="dropdown1"><i class="material-icons left">settings</i>Setting<i class="material-icons right">arrow_drop_down</i></a></li>
@@ -23,7 +25,18 @@
   </div>
 </nav>
 
-<ul class="side-nav" id="mobile-demo">
+<ul id="mobile-demo" class="side-nav">
+  <li>
+    <div class="userView">
+      <div class="background">
+        <img src="../../assets/office.jpg">
+      </div>
+      <img class="circle" src="../../assets/icon-user-default.png">
+      <span class="white-text name">{{userLogin?.fullname}}</span>
+      <span class="white-text email">{{userLogin?.positionLocalName}}</span>
+    </div>
+  </li>
+  <li><a class="subheader">Menu</a></li>
   <li routerLinkActive="active"><a routerLink="/receivemultiple">รับ Chart</a></li>
   <li routerLinkActive="active"><a routerLink="/sendmultiple">ส่ง Chart</a></li>
   <li routerLinkActive="active"><a routerLink="/audit">Audit Chart</a></li>
@@ -31,4 +44,12 @@
   <li routerLinkActive="active"><a routerLink="/report">รายงาน</a></li>
   <li routerLinkActive="active"><a href="../../assets/scc.pdf" target="blank">คู่มือการใช้งาน</a></li>
   <li routerLinkActive="active"><a routerLink="/login">Login</a></li>
+  <li><div class="divider"></div></li>
+  <li><a class="subheader">Setting</a></li>
+  <li routerLinkActive="active"><a routerLink="/user">User</a></li>
+  <li routerLinkActive="active"><a routerLink="/userposition">UserPosition</a></li>
+  <li routerLinkActive="active"><a routerLink="/role">Role</a></li>
+  <li routerLinkActive="active"><a routerLink="/reason">Reason</a></li>
+  <li routerLinkActive="active"><a routerLink="/position">Position</a></li>
+  <li routerLinkActive="active"><a routerLink="/monitor">Monitor</a></li>
 </ul>

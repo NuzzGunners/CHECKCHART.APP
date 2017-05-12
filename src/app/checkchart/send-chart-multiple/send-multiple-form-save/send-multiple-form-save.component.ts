@@ -12,11 +12,13 @@ export class SendMultipleFormSaveComponent {
   modalActions = new EventEmitter<string | MaterializeAction>();
   @Input() listPatients = [];
   @Output() patientSave = new EventEmitter();
+  @Output() patientCancelSave = new EventEmitter();
   @Input() sendtouser: any;
   @Input() position: number;
   @Output() ddlsendtouser: EventEmitter<string> = new EventEmitter();
   @Output() changePositionToSend: EventEmitter<string> = new EventEmitter();
   PositionToSend = '';
+  isPopupclose = false;
 
   ddlsendtouserSelect(user) {
     this.ddlsendtouser.emit(user);
@@ -29,6 +31,8 @@ export class SendMultipleFormSaveComponent {
 
   sendPopup(event: any): void {
     event.preventDefault();
+    this.isPopupclose = false;
+    this.PositionToSend = '';
     this.modalActions.emit({ action: "modal", params: ['open'] });
   }
 
@@ -38,6 +42,8 @@ export class SendMultipleFormSaveComponent {
   }
 
   closeModal() {
+    this.isPopupclose = true;
+    this.patientCancelSave.emit();
     this.modalActions.emit({ action: "modal", params: ['close'] });
   }
 }

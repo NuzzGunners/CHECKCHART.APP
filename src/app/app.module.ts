@@ -15,6 +15,7 @@ import { routing } from './app.routing';
 //Modules
 import { SettingModule } from './setting/setting.module';
 import { CheckchartModule } from './checkchart/checkchart.module';
+import { ChartModule } from './chart/chart.module';
 //Services
 import { NotificationService } from './shared/utils/notification.service';
 import { ReportService } from './shared/services/report.service';
@@ -28,18 +29,19 @@ import { AuthAdminService } from './shared/services/auth-admin.service';
 import { AuthUserService } from './shared/services/auth-user.service';
 import { AuthAuditService } from './shared/services/auth-audit.service';
 //Others
-import { EqualValidator } from './shared/utils/equal-validator.directive';
 import { MaterializeModule } from 'angular2-materialize';
 import { LoginFormComponent } from './login/login-form/login-form.component';
 import { LoginFormPositionComponent } from './login/login-form-position/login-form-position.component';
 import { LoginFormLogoutComponent } from './login/login-form-logout/login-form-logout.component';
 import { LoginFormChangepasswordComponent } from './login/login-form-changepassword/login-form-changepassword.component';
+//SignalR
+import { SignalrService } from './shared/services/signalr.service';
+import { SharedModule } from './shared/modules/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    EqualValidator,
     LoginComponent,
     ReportComponent,
     LoginFormComponent,
@@ -54,8 +56,10 @@ import { LoginFormChangepasswordComponent } from './login/login-form-changepassw
     HttpModule,
     SettingModule,
     CheckchartModule,
+    ChartModule,
     routing,
-    MaterializeModule
+    MaterializeModule,
+    SharedModule
   ],
   providers: [
     NotificationService,
@@ -67,7 +71,8 @@ import { LoginFormChangepasswordComponent } from './login/login-form-changepassw
     AuthAdminService,
     AuthUserService,
     ReportService,
-    AuthAuditService
+    AuthAuditService,
+    SignalrService
   ],
   bootstrap: [AppComponent]
 })

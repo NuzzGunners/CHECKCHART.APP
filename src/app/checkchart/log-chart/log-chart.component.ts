@@ -18,8 +18,8 @@ export class LogChartComponent implements OnInit {
   checkchartLog: Checkchart[];
 
   patient: Patient;
-  doctorAudit = {};
-  nurseAudit = {};
+  doctorAudit: any;
+  nurseAudit: any;
 
   constructor(
     private checkchartService: CheckchartService,
@@ -99,6 +99,7 @@ export class LogChartComponent implements OnInit {
               this.isLoading = false;
               this.resetForm();
             });
+
         } else {
           this.resetForm();
           this.notificationService.printErrorMessage('โหลดข้อมูล Chart Log failed. ไม่พบข้อมูล');
@@ -112,26 +113,21 @@ export class LogChartComponent implements OnInit {
   }
 
   deleteLog(event) {
-    this.notificationService.openConfirmationDialog('Are you sure you want to remove '
-      + event.an + '?',
-      () => {
+    this.itemLog.id = event.id;
+    this.itemLog.sendtodatetime = event.sendtodatetime;
+    this.itemLog.cxlbyuser = this.userLogin.username;
+    this.itemLog.cxlbyuserreason = 1;
 
-        this.itemLog.id = event.id;
-        this.itemLog.sendtodatetime = event.sendtodatetime;
-        this.itemLog.cxlbyuser = this.userLogin.username;
-        this.itemLog.cxlbyuserreason = 1;
-
-        this.checkchartService.deletePatientLog(this.itemLog)
-          .subscribe(() => {
-            if (event.sendtodatetime == null) {
-              this.notificationService.printSuccessMessage('Chart รับ ยกเลิก success.');
-            } else {
-              this.notificationService.printSuccessMessage('Chart ส่ง ยกเลิก success.');
-            }
-            this.resetForm();
-          }, error => {
-            this.notificationService.printErrorMessage('Delete Chart Log error. ' + error);
-          });
+    this.checkchartService.deletePatientLog(this.itemLog)
+      .subscribe(() => {
+        if (event.sendtodatetime == null) {
+          this.notificationService.printSuccessMessage('Chart รับ ยกเลิก success.');
+        } else {
+          this.notificationService.printSuccessMessage('Chart ส่ง ยกเลิก success.');
+        }
+        this.resetForm();
+      }, error => {
+        this.notificationService.printErrorMessage('Delete Chart Log error. ' + error);
       });
   }
 }

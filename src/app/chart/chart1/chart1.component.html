@@ -1,0 +1,21 @@
+<p></p>
+<div class="chip">
+    <img src="../../assets/icon-user-default.png" alt="Contact Person"> <b>{{userLogin.fullname}}</b> - <b>{{userLogin.positionLocalName}}</b>
+</div>
+
+<div id="box">
+    <div class="box1">จากวันที่ :</div>
+    <div class="box2">
+        <my-date-picker [options]="myDatePickerOptions" (dateChanged)="onDateFromChanged($event)"></my-date-picker>
+    </div>
+    <div class="box3">ถึงวันที่ :</div>
+    <div class="box4">
+        <my-date-picker [options]="myDatePickerOptions" (dateChanged)="onDateToChanged($event)"></my-date-picker>
+    </div>
+    <div class="box5"><button [disabled]="!isFormValid()" (click)="onSearch()" class="waves-effect waves-light btn bt">ค้นหา</button></div>
+
+</div>
+
+<hr>
+
+<chart [options]="options"></chart>

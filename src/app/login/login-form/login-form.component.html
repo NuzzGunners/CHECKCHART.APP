@@ -1,15 +1,15 @@
 <div class="row margin">
   <div class="input-field col s12">
     <i class="material-icons prefix">perm_identity</i>
-    <input (keyup.enter)="btnlogin()" autocomplete="off" id="username" name="username" type="text" class="validate" [(ngModel)]="user.username">
-    <label for="username" [class.active]="username">User Name</label>
+    <input autofocus [focus]="myFocusTriggeringEventEmitter" (keyup.enter)="btnlogin()" autocomplete="off" id="username" name="username" type="text" class="validate" [(ngModel)]="user.username">
+    <label for="username" [class.active]="user.username">User Name</label>
   </div>
 </div>
 <div class="row margin">
   <div class="input-field col s12">
     <i class="material-icons prefix">lock_outline</i>
     <input (keyup.enter)="btnlogin()" id="password" type="password" name="password" class="validate" [(ngModel)]="user.password">
-    <label for="password" [class.active]="password">Password</label>
+    <label for="password" [class.active]="user.password">Password</label>
   </div>
 </div>
 <div *ngIf="isLoading" class="col s12 center">

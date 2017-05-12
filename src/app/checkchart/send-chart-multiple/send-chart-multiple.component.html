@@ -3,28 +3,16 @@
     <img src="../../assets/icon-user-default.png" alt="Contact Person"> <b>{{userLogin.fullname}}</b> - <b>{{userLogin.positionLocalName}}</b>
 </div>
 
-<div class="row">
-    <div class="col s12">
-        <div class="card">
-            <div class="card-content">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <app-send-multiple-form [isSaving]="isSaving" (patientSearch)="searchPatient($event)"></app-send-multiple-form>
-                    </div>
-                    <div class="col s12 center">
-                        <img *ngIf="isLoading || isSaving" width="25px" height="25px" src="../../../assets/loading.gif">
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <app-send-multiple-list (patientRemove)="removePatient($event)" [listPatients]="listPatients"></app-send-multiple-list>
-                    </div>
-                </div>
-                <hr>
-                <app-send-multiple-form-save (changePositionToSend)="positionToSendChanged($event)" (ddlsendtouser)="ddlsendtouserSelect($event)" (patientSave)="savePatient($event)" [listPatients]="listPatients"
-                [sendtouser]="sendtouser" [position]="position"></app-send-multiple-form-save>
-            </div>
-        </div>
-    </div>
-</div>
+<app-send-multiple-form
+[isSaving]="isSaving" 
+[isLoading]="isLoading" 
+[listPatients]="listPatients"
+(patientSearch)="searchPatient($event)"
+(patientRemove)="removePatient($event)" 
+(patientSave)="savePatient()"
+(changePositionToSend)="positionToSendChanged($event)" 
+(ddlsendtouser)="ddlsendtouserSelect($event)" 
+[sendtouser]="sendtouser" 
+[position]="position"
+>    
+</app-send-multiple-form>

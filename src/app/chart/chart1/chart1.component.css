@@ -1,0 +1,50 @@
+chart {
+    display: block;
+}
+
+#box {
+    margin-top: 20px;
+}
+
+.lb {
+    width: 70px;
+    float: left;    
+}
+
+.bt {
+    z-index: 0;
+    position: relative;
+}
+
+.box1 {
+    display: inline-block;
+    width: 60px;
+    height: 50px;
+    position: absolute;
+    line-height: 35px;
+}
+.box2 {
+    display: inline-block;
+    width: 270px;
+    height: 50px;
+    margin-left: 70px;
+}
+.box3 {
+    display: inline-block;
+    width: 60px;
+    height: 50px;
+    position: absolute;
+    line-height: 35px;
+}
+.box4 {
+    display: inline-block;
+    width: 270px;
+    height: 50px;
+    margin-left: 70px;
+}
+.box5 {
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    position: absolute;
+}

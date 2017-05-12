@@ -26,12 +26,7 @@
             <td>{{item.sendtopositionlocalname}}</td>
             <td>{{item.sendtousername}}</td>
             <td>
-              <a *ngIf="(item.sendtodatetime == null && item.id == lastId && item.receivebyposition == userLogin.positionName && item.receivebyuser == userLogin.username && userLogin.positionName != 'Shelving IPD')
-              || (item.sendtodatetime != null && userLogin.position != 63 && item.id == lastId && item.sendtoposition == sendtopositionname && item.sendtobyuser == userLogin.username)
-              || (item.sendtodatetime != null && userLogin.position == 63 && item.id == lastId && item.sendtobyuser == userLogin.username)"
-                (click)="delete(item,$event)" href="">
-                <i class="material-icons">delete</i>
-              </a>
+              <a *ngIf="canDelete(item)" (click)="delete(item,$event)" href=""><i class="material-icons">delete</i></a>
             </td>
           </tr>
         </tbody>

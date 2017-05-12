@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule }  from '@angular/router';
-import { HttpModule }  from '@angular/http';
+import { RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
 
 import { CheckchartComponent } from './checkchart.component';
 import { routingCheckchart } from './checkchart.routing';
@@ -31,9 +31,22 @@ import { AuditChartComponent } from './audit-chart/audit-chart.component';
 import { AuditChartFormComponent } from './audit-chart/audit-chart-form/audit-chart-form.component';
 import { AuditChartFormDetailComponent } from './audit-chart/audit-chart-form-detail/audit-chart-form-detail.component';
 import { LogChartDetailComponent } from './log-chart/log-chart-detail/log-chart-detail.component';
-import { DateformatPipe } from '../shared/utils/dateformat.pipe';
-import { ReversePipe } from '../shared/utils/reverse.pipe';
 import { LogChartDetailAuditComponent } from './log-chart/log-chart-detail-audit/log-chart-detail-audit.component';
+
+import { SharedModule } from '../shared/modules/shared.module';
+
+import { ChartModule as Highcharts } from 'angular2-highcharts';
+import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
+
+export declare let require: any;
+
+export function highchartsFactory() {
+  const hc = require('highcharts/highstock');
+  const dd = require('highcharts/modules/exporting');
+  dd(hc);
+
+  return hc;
+}
 
 @NgModule({
   imports: [
@@ -43,12 +56,14 @@ import { LogChartDetailAuditComponent } from './log-chart/log-chart-detail-audit
     RouterModule,
     HttpModule,
     MaterializeModule,
-    routingCheckchart 
+    routingCheckchart,
+    SharedModule,
+    Highcharts
   ],
   declarations: [
-    CheckchartComponent, 
-    ReceiveChartComponent, 
-    ReceiveChartMultipleComponent, 
+    CheckchartComponent,
+    ReceiveChartComponent,
+    ReceiveChartMultipleComponent,
     SendChartComponent,
     ReceiveMultipleFormComponent,
     ReceiveMultipleListComponent,
@@ -65,12 +80,13 @@ import { LogChartDetailAuditComponent } from './log-chart/log-chart-detail-audit
     AuditChartFormComponent,
     AuditChartFormDetailComponent,
     LogChartDetailComponent,
-    DateformatPipe,
-    ReversePipe,
     LogChartDetailAuditComponent
-    ],
-    providers: [
-      CheckchartService
-    ]
+  ],
+  providers: [
+    CheckchartService,
+    {
+      provide: HighchartsStatic,
+      useFactory: highchartsFactory
+    }]
 })
 export class CheckchartModule { }

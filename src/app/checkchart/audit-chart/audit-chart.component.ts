@@ -224,7 +224,7 @@ export class AuditChartComponent implements OnInit, OnDestroy {
   }
 
   deleteAudit(audit) {
-    this.notificationService.openConfirmationDialog('Are you sure you want to remove '
+    /*this.notificationService.openConfirmationDialog('Are you sure you want to remove '
       + audit.fullname + '?',
       () => {
         this.checkchartService.deleteAuditchart(audit)
@@ -234,6 +234,14 @@ export class AuditChartComponent implements OnInit, OnDestroy {
           }, error => {
             this.notificationService.printErrorMessageBl('ลบข้อมูล Audit error. ' + error);
           });
+      });*/
+
+    this.checkchartService.deleteAuditchart(audit)
+      .subscribe(() => {
+        this.notificationService.printSuccessMessageBl('ลบข้อมูล Audit success.');
+        this.resetForm();
+      }, error => {
+        this.notificationService.printErrorMessageBl('ลบข้อมูล Audit error. ' + error);
       });
   }
 

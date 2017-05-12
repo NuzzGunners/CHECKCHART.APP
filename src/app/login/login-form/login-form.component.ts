@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { User } from '../../shared/services/login';
 
 @Component({
@@ -6,15 +6,20 @@ import { User } from '../../shared/services/login';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements AfterViewInit {
 
   @Output() login = new EventEmitter();
   user: User = new User();
   @Input() isLoading: boolean;
+  public myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 
-  constructor() { 
+  constructor() {
     this.user.username = '';
     this.user.password = '';
+  }
+
+  ngAfterViewInit() {
+    this.myFocusTriggeringEventEmitter.emit(true);
   }
 
   btnlogin() {

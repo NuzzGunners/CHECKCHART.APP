@@ -8,7 +8,7 @@ import { Patient, Checkchart } from '../../shared/services/checkchart';
 })
 export class SendMultipleListComponent  {
 
-  @Input() listPatients: Patient;
+  @Input() listPatients: Patient[];
   @Output() patientRemove: EventEmitter<string> = new EventEmitter();
 
   delete(item, event: MouseEvent) {
